@@ -1,14 +1,17 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Tienda Libre</title>
-</head>
-<body>
+{% extends "tiendalibre/base.html" %}
 
-    <h1>Bienvenido a Tienda Libre</h1>
+{% block title %}
+Inicio
+{% endblock %}
 
-    <p>Esta es la página principal de nuestra tienda.</p>
+{% block content %}
 
-</body>
-</html>
+<h1 class="text-primary">Bienvenido a Tienda Libre</h1>
+
+<p>Esta es la página principal de nuestra tienda.</p>
+
+<button class="btn btn-primary">
+    Comprar
+</button>
+
+{% endblock %}
