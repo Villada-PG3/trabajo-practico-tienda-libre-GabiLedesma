@@ -8,10 +8,54 @@ Inicio
 
 <h1 class="text-primary">Bienvenido a Tienda Libre</h1>
 
-<p>Esta es la página principal de nuestra tienda.</p>
+<p>Estos son nuestros productos:</p>
 
-<button class="btn btn-primary">
-    Comprar
-</button>
+{% if productos %}
+
+    <div class="row">
+
+        {% for producto in productos %}
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ producto.nombre }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ producto.descripcion }}
+                        </p>
+
+                        <p>
+                            <strong>Stock:</strong>
+                            {{ producto.stock }}
+                        </p>
+
+                        <p>
+                            <strong>Precio:</strong>
+                            ${{ producto.precio }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    <div class="alert alert-warning">
+        No hay productos registrados.
+    </div>
+
+{% endif %}
 
 {% endblock %}
