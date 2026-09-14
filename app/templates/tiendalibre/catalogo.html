@@ -32,7 +32,9 @@ Catálogo
                     <div class="card-body">
 
                         <h5 class="card-title">
+                            <a href="{% url 'detalle_producto' pk=producto.pk %}" class="text-decoration-none">
                             {{ producto.nombre }}
+                            </a>
                         </h5>
 
                         <p class="card-text">
