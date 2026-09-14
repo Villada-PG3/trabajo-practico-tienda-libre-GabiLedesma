@@ -1,0 +1,89 @@
+{% extends "tiendalibre/base.html" %}
+
+{% block title %}
+Catálogo
+{% endblock %}
+
+{% block content %}
+
+<h1 class="text-primary">Catálogo de productos</h1>
+
+<p>Estos son nuestros productos disponibles:</p>
+
+{% if productos %}
+
+    <div class="row">
+
+        {% for producto in productos %}
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100">
+
+                    {% if producto.imagen %}
+                        <img
+                            src="{{ producto.imagen.url }}"
+                            class="card-img-top"
+                            alt="{{ producto.nombre }}"
+                            style="height: 250px; object-fit: contain;"
+                        >
+                    {% endif %}
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            {{ producto.nombre }}
+                        </h5>
+
+                        <p class="card-text">
+                            {{ producto.descripcion }}
+                        </p>
+
+                        <p>
+                            <strong>Marca:</strong>
+                            {{ producto.marca }}
+                        </p>
+
+                        <p>
+                            <strong>Precio:</strong>
+                            ${{ producto.precio }}
+                        </p>
+
+                        <p>
+                            <strong>Stock:</strong>
+                            {{ producto.stock }}
+                        </p>
+
+                        {% if producto.stock > 0 %}
+
+                            <span class="badge bg-success">
+                                Disponible
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Sin stock
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    <div class="alert alert-warning">
+        No hay productos activos registrados.
+    </div>
+
+{% endif %}
+
+{% endblock %}
