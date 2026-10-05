@@ -17,9 +17,11 @@
         {% if producto.imagen %}
             <img
                 src="{{ producto.imagen.url }}"
-                class="img-fluid rounded"
+                class="img-fluid rounded detalle-img"
                 alt="{{ producto.nombre }}"
             >
+        {% else %}
+            <div class="detalle-sin-imagen rounded">Sin imagen</div>
         {% endif %}
 
     </div>
