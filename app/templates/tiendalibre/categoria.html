@@ -1,0 +1,130 @@
+{% extends "tiendalibre/base.html" %}
+
+{% block title %}
+{{ categoria.nombre }}
+{% endblock %}
+
+{% block content %}
+
+  <a href="{% url 'catalogo' %}" class="btn btn-outline-secondary mb-3">← Volver al catálogo</a>
+  <h1 class="text-primary">{{ categoria.nombre }}</h1>
+  <p>Productos de la categoría {{ categoria.nombre }}:</p>
+
+{% if productos %}
+
+    <div class="row">
+
+        {% for producto in productos %}
+
+            <div class="col-md-4 mb-4">
+
+                <div class="card h-100 producto-card">
+
+                    <div class="producto-img-wrapper">
+                        {% if producto.imagen %}
+                            <img
+                                src="{{ producto.imagen.url }}"
+                                class="producto-img"
+                                alt="{{ producto.nombre }}"
+                            >
+                        {% else %}
+                            <span class="sin-imagen">Sin imagen</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="card-body">
+
+                        <h5 class="card-title">
+                            <a href="{% url 'detalle_producto' pk=producto.pk %}" class="text-decoration-none">
+                            {{ producto.nombre }}
+                            </a>
+                        </h5>
+
+                        <p class="card-text">
+                            {{ producto.descripcion }}
+                        </p>
+
+                        <p>
+                            <strong>Marca:</strong>
+                            {{ producto.marca }}
+                        </p>
+
+                        <p>
+                            <strong>Precio:</strong>
+                            ${{ producto.precio }}
+                        </p>
+
+                        <p>
+                            <strong>Stock:</strong>
+                            {{ producto.stock }}
+                        </p>
+
+                        {% if producto.stock > 0 %}
+
+                            <span class="badge bg-success">
+                                Disponible
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-danger">
+                                Sin stock
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+    {% if is_paginated %}
+        <nav aria-label="Paginación del catálogo">
+            <ul class="pagination justify-content-center">
+
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">&laquo; Primera</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">&laquo; Primera</span></li>
+                    <li class="page-item disabled"><span class="page-link">Anterior</span></li>
+                {% endif %}
+
+                <li class="page-item active" aria-current="page">
+                    <span class="page-link">
+                        Página {{ page_obj.number }} de {{ paginator.num_pages }}
+                    </span>
+                </li>
+
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ paginator.num_pages }}">Última &raquo;</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled"><span class="page-link">Siguiente</span></li>
+                    <li class="page-item disabled"><span class="page-link">Última &raquo;</span></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+    {% endif %}
+{% else %}
+
+    <div class="alert alert-warning">
+        No hay productos activos en esta categoría.
+    </div>
+
+{% endif %}
+
+{% endblock %}
