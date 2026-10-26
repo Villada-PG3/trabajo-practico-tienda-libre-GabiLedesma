@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, DetailView
 from .models import Producto
 
 
@@ -16,6 +16,7 @@ class CatalogoView(ListView):
     model = Producto
     template_name = "tiendalibre/catalogo.html"
     context_object_name = "productos"
+    paginate_by = 6   
 
     def get_queryset(self):
         return Producto.objects.filter(activo=True).order_by("-fecha_creacion")
@@ -24,6 +25,10 @@ class CatalogoView(ListView):
 def acerca_de_mi(request):
     return render(request, "tiendalibre/acercademi.html")
 
-def detalle_producto(request, pk):
-    producto = get_object_or_404(Producto, pk=pk)
-    return render(request, "tiendalibre/detalle.html", {"producto": producto})
+class ProductoDetailView(DetailView):
+    model = Producto
+    template_name = "tiendalibre/detalle.html"
+    context_object_name = "producto"
+
+    def get_queryset(self):
+        return Producto.objects.filter(activo=True)
